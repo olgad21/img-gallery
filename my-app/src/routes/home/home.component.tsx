@@ -1,5 +1,4 @@
 import { ChangeEvent, Component } from "react";
-// import { State, Monster } from "../../App";
 import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
 import getData from "../../utils/data.utils";
@@ -20,26 +19,32 @@ export type State = {
 class Home extends Component<{}, State> {
   state: State = {
     monsters: [],
-    searchValue: '',
+    searchValue: localStorage.getItem('search') || '',
   };
 
   componentDidMount() {
     const fetchUsers = async () => {
       const users = await getData<Monster[]>('https://jsonplaceholder.typicode.com/users');
       this.setState(
-        () => {
-          return { monsters: users }
-        }, 
+        () => ({ monsters: users }),
       )
     }
 
     fetchUsers();
+    window.addEventListener('beforeunload', this.saveToStorage);
+  }
+
+  componentWillUnmount() {
+    this.saveToStorage();
+    window.removeEventListener('beforeunload', this.saveToStorage);
+  }
+
+  saveToStorage = () => {
+    localStorage.setItem('search', this.state.searchValue);
   }
 
   onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState(() => {
-      return { searchValue: event.target.value };
-    })
+    this.setState(() => ({ searchValue: event.target.value }));
   }
 
   render () {
@@ -54,6 +59,7 @@ class Home extends Component<{}, State> {
         <SearchBar 
           onChangeHandler={this.onSearchChange}
           className='monsters-search-box'
+          value={searchValue}
         />
         <CardList monsters={searchedMonsters}/>
       </div>

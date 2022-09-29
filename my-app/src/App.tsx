@@ -9,12 +9,12 @@ class App extends Component {
   render() {
     return (
       <Routes>
-        <Route path="*" element={<PageNotFound />} />
         <Route path={'/'} element={<NavigationBar />}>
           <Route index element={<Navigate to="/home" replace />}></Route>
           <Route path={'home'} element={<Home />}></Route>
           <Route path={'about-us'} element={<AboutUs />}></Route>
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     )
   }
