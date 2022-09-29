@@ -1,0 +1,11 @@
+.about-title {
+  font-family: 'Bigelow Rules', cursive;
+  margin-top: 75px;
+  font-size: 80px;
+  color: #0ccac4;
+}
+
+.about-desc {
+  margin: 25px;
+  color: white;
+}

@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import './card.styles.css';
-import { Monster } from '../../App';
+import { Monster } from '../../routes/home/home.component';
 
 interface CardProps {
   monster: Monster,

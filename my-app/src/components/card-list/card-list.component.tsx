@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Card from '../card/card.component';
-import { Monster } from '../../App';
+import { Monster } from '../../routes/home/home.component';
 import './card-list.styles.css';
 
 interface CardListProps {
