@@ -1,7 +1,7 @@
 import { ChangeEvent, Component } from "react";
 import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
-import getData from "../../utils/data.utils";
+import { getData } from "../../utils/data.utils";
 
 export interface Monster {
   id: string,

@@ -12,6 +12,7 @@ class SearchBar extends Component<SearchBarProps> {
     const { onChangeHandler, className, value }: SearchBarProps = this.props;
     return (
       <input 
+        data-testid='search-bar'
         className={`search-box ${className}`}
         type='search' 
         placeholder='Search name'

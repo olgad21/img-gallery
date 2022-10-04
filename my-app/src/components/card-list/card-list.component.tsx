@@ -11,10 +11,10 @@ class CardList extends Component<CardListProps> {
   render() {
     const { monsters } = this.props;
     return (
-      <div className = 'card-list'>
+      <div className='card-list' data-testid='card-list'>
         {monsters.map((monster) => {
           return (
-            <Card monster = {monster}/>
+            <Card key={monster.id} monster = {monster} />
           )
         })}
       </div>
