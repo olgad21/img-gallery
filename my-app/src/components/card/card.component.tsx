@@ -8,8 +8,7 @@ interface CardProps {
 
 class Card extends Component<CardProps> {
   render() {
-    const { monster } = this.props;
-    const { name, username, website, email, id } = monster;
+    const { name, username, website, email, id } = this.props.monster;
     return (
       <div className='card-container' data-testid='card'>
         <img alt='monster' src={`https://robohash.org/${id}?set=set2&size=180x180`}/>

@@ -9,7 +9,7 @@ interface SearchBarProps {
 
 class SearchBar extends Component<SearchBarProps> {
   render () {
-    const { onChangeHandler, className, value }: SearchBarProps = this.props;
+    const { onChangeHandler, className, value } = this.props;
     return (
       <input 
         data-testid='search-bar'

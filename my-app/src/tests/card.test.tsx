@@ -1,14 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Card from '../components/card/card.component';
-
-const monsters = [{
-  id: 'string',
-  name: 'string',
-  website: 'string',
-  email: 'string',
-  username: 'string',
-}];
+import monsters from '../constants';
 
 test('renders card', () => {
   render(<Card monster = {monsters[0]}/>);

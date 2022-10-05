@@ -11,13 +11,13 @@ export interface Monster {
   username: string,
 }
 
-export type State = {
+export type HomeState = {
   monsters: Monster[]; 
   searchValue: string;
 };
 
-class Home extends Component<{}, State> {
-  state: State = {
+class Home extends Component<{}, HomeState> {
+  state: HomeState = {
     monsters: [],
     searchValue: localStorage.getItem('search') || '',
   };
@@ -25,9 +25,7 @@ class Home extends Component<{}, State> {
   componentDidMount() {
     const fetchUsers = async () => {
       const users = await getData<Monster[]>('https://jsonplaceholder.typicode.com/users');
-      this.setState(
-        () => ({ monsters: users }),
-      )
+      this.setState({ monsters: users });
     }
 
     fetchUsers();
