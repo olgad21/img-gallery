@@ -1,0 +1,22 @@
+form {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin: 0 auto;
+  background-color: white;
+  padding: 25px;
+  border-radius: 5px;
+}
+
+form * {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.submit-input {
+  margin: 0 auto;
+  cursor: pointer;
+  font-size: 16px;
+}

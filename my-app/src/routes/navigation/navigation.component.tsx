@@ -21,6 +21,13 @@ const NavigationBar: React.FC = () => {
             }>
             About
           </NavLink>
+          <NavLink 
+            to={'/submit'} 
+            className={({ isActive }) =>
+              isActive ? 'nav-link--active' : 'nav-link'
+            }>
+            Submit
+          </NavLink>
         </div>
       </div>
       <Outlet />

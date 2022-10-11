@@ -1,0 +1,20 @@
+.confirmation-message {
+  display: flex;
+  justify-content: space-between;
+  width: 5%;
+  margin: 0 auto;
+  font-family: 'Bigelow Rules', cursive;
+  font-size: 30px;
+  color: #0ccac4;
+}
+
+.close-button {
+  color: red;
+  background-color: transparent;
+  border: none;
+}
+
+.close-button:hover {
+  transform: scale(1.4);
+  color: brown;
+}
