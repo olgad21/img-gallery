@@ -1,38 +1,41 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import './navigation.styles.css';
+import "./navigation.styles.css";
 
 const NavigationBar: React.FC = () => {
   return (
     <Fragment>
-      <div className='navigation'>
-        <div className='nav-links-container'>
-          <NavLink 
-            to={'/home'}
+      <div className="navigation">
+        <div className="nav-links-container">
+          <NavLink
+            to={"/home"}
             className={({ isActive }) =>
-              isActive ? 'nav-link--active' : 'nav-link'
-            }>
+              isActive ? "nav-link--active" : "nav-link"
+            }
+          >
             Home
           </NavLink>
-          <NavLink 
-            to={'/about-us'} 
+          <NavLink
+            to={"/about-us"}
             className={({ isActive }) =>
-              isActive ? 'nav-link--active' : 'nav-link'
-            }>
+              isActive ? "nav-link--active" : "nav-link"
+            }
+          >
             About
           </NavLink>
-          <NavLink 
-            to={'/submit'} 
+          <NavLink
+            to={"/submit"}
             className={({ isActive }) =>
-              isActive ? 'nav-link--active' : 'nav-link'
-            }>
+              isActive ? "nav-link--active" : "nav-link"
+            }
+          >
             Submit
           </NavLink>
         </div>
       </div>
       <Outlet />
     </Fragment>
-  )
-}
+  );
+};
 
 export default NavigationBar;

@@ -1,5 +1,5 @@
-import { Component, ChangeEventHandler } from 'react';
-import './search-bar.styles.css';
+import React, { Component, ChangeEventHandler } from "react";
+import "./search-bar.styles.css";
 
 interface SearchBarProps {
   onChangeHandler: ChangeEventHandler<HTMLInputElement>;
@@ -8,18 +8,18 @@ interface SearchBarProps {
 }
 
 class SearchBar extends Component<SearchBarProps> {
-  render () {
+  render() {
     const { onChangeHandler, className, value } = this.props;
     return (
-      <input 
-        data-testid='search-bar'
+      <input
+        data-testid="search-bar"
         className={`search-box ${className}`}
-        type='search' 
-        placeholder='Search name'
-        onChange = {onChangeHandler}
-        value = {value}
+        type="search"
+        placeholder="Search name"
+        onChange={onChangeHandler}
+        value={value}
       />
-    )
+    );
   }
 }
 

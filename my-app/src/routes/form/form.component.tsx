@@ -1,7 +1,4 @@
-import React, {
-  createRef,
-  FormEvent,
-} from "react";
+import React, { createRef, FormEvent, ChangeEvent } from "react";
 import { User, users } from "../../constants";
 import "../../components/card-list/card-list.styles.css";
 import "./form.styles.css";
@@ -15,7 +12,7 @@ type Errors = {
   countryError: boolean;
   imgError: boolean;
   privacyError: boolean;
-}
+};
 
 interface FormState {
   users: User[];
@@ -36,7 +33,7 @@ class Form extends React.Component<{}, FormState> {
       countryError: false,
       imgError: false,
       privacyError: false,
-    }
+    },
   };
 
   nameRef = createRef<HTMLInputElement>();
@@ -61,10 +58,10 @@ class Form extends React.Component<{}, FormState> {
         birthday: new Date(this.birthdayRef.current!.value),
         country: this.countryRef.current?.value ?? "",
         agreedToPrivacyRules:
-        this.agreedToPrivacyRulesRef.current?.checked ?? false,
+          this.agreedToPrivacyRulesRef.current?.checked ?? false,
         agreedToEmails: this.agreedToEmailsRef.current?.checked ?? false,
         gender: this.maleRef.current?.checked ? "male" : "female",
-        img: this.imgRef.current?.files?.[0] ?? null
+        img: this.imgRef.current?.files?.[0] ?? null,
       };
 
       this.setState({
@@ -74,23 +71,23 @@ class Form extends React.Component<{}, FormState> {
 
       this.formRef.current?.reset();
     } else {
-      if (this.formRef.current) {
-        this.formRef.current.disabled = true;
+      if (this.formRef.current && this.formRef.current.submitform) {
+        this.formRef.current.submitform.disabled = true;
       }
     }
   };
 
-  handleChange = (event: FormEvent<HTMLFormElement>) => {
+  handleChange = () => {
     this.setState({
       inputBlank: false,
     });
-    if (this.formRef.current) {
-      this.formRef.current.disabled = this.state.inputBlank;
+    if (this.formRef.current && this.formRef.current.submitform) {
+      this.formRef.current.submitform.disabled = this.state.inputBlank;
     }
   };
 
   handleValidation = () => {
-    let isValidForm = true; //TODO: сделать 1 переменную для стейта
+    let isValidForm = true;
     let errors: Errors = {
       nameError: false,
       emailError: false,
@@ -111,7 +108,10 @@ class Form extends React.Component<{}, FormState> {
       errors.nameError = false;
     }
 
-    if (!this.emailRef.current?.value || !this.emailRef.current?.value.includes('@')) {
+    if (
+      !this.emailRef.current?.value ||
+      !this.emailRef.current?.value.includes("@")
+    ) {
       errors.emailError = true;
       isValidForm = false;
     } else {
@@ -141,10 +141,10 @@ class Form extends React.Component<{}, FormState> {
 
     this.setState({
       errors: errors,
-    })
+    });
 
     return isValidForm;
-  }
+  };
 
   handleCloseConfirmationMessage = () => {
     this.setState({
@@ -153,19 +153,10 @@ class Form extends React.Component<{}, FormState> {
   };
 
   render() {
-    const { 
-      inputBlank,
-      showConfirmation,
-      users,
-    } = this.state;
-
-    const {
-      nameError,
-      emailError, 
-      birthdayError, 
-      countryError, 
-      privacyError,
-    } = this.state.errors;
+    const { inputBlank, showConfirmation, users } = this.state;
+    
+    const { nameError, emailError, birthdayError, countryError, privacyError } =
+      this.state.errors;
 
     return (
       <div>
@@ -180,17 +171,25 @@ class Form extends React.Component<{}, FormState> {
             Name
             <input name="name" type="text" ref={this.nameRef} />
           </label>
-          {nameError && <p className='error-message' data-testid='error-message'>Please enter a valid name</p>}
+          {nameError && (
+            <p className="error-message" data-testid="error-message">
+              Please enter a valid name
+            </p>
+          )}
           <label>
             Email
             <input name="email" type="text" ref={this.emailRef} />
           </label>
-          {emailError && <p className='error-message'>Please enter a valid email</p>}
+          {emailError && (
+            <p className="error-message">Please enter a valid email</p>
+          )}
           <label>
             Birthday
             <input name="birthday" type="date" ref={this.birthdayRef} />
           </label>
-          {birthdayError && <p className='error-message'>Please enter a valid date</p>}
+          {birthdayError && (
+            <p className="error-message">Please enter a valid date</p>
+          )}
           <label>
             Country
             <select ref={this.countryRef}>
@@ -200,7 +199,9 @@ class Form extends React.Component<{}, FormState> {
               <option value="Canada">Canada</option>
             </select>
           </label>
-          {countryError && <p className='error-message'>Please choose a country</p>}
+          {countryError && (
+            <p className="error-message">Please choose a country</p>
+          )}
           <label>
             Agree to Privacy Rules
             <input
@@ -209,7 +210,9 @@ class Form extends React.Component<{}, FormState> {
               ref={this.agreedToPrivacyRulesRef}
             />
           </label>
-          {privacyError && <p className='error-message'>Please agree to our Privacy Terms</p>}
+          {privacyError && (
+            <p className="error-message">Please agree to our Privacy Terms</p>
+          )}
           <label>
             Agree to Emails
             <input

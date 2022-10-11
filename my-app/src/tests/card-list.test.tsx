@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import CardList from "../components/card-list/card-list.component";
-import monsters from '../constants';
+import monsters from "../constants";
 
 describe("Card list component", () => {
   test("it contains all cards", () => {
