@@ -23,7 +23,7 @@ interface FormState {
 
 class Form extends React.Component<{}, FormState> {
   state: FormState = {
-    users: users,
+    users: [],
     showConfirmation: false,
     inputBlank: true,
     errors: {
@@ -154,7 +154,7 @@ class Form extends React.Component<{}, FormState> {
 
   render() {
     const { inputBlank, showConfirmation, users } = this.state;
-    
+
     const { nameError, emailError, birthdayError, countryError, privacyError } =
       this.state.errors;
 
