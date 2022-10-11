@@ -74,7 +74,9 @@ class Form extends React.Component<{}, FormState> {
 
       this.formRef.current?.reset();
     } else {
-      event.currentTarget.submitform.disabled = true;
+      if (this.formRef.current) {
+        this.formRef.current.disabled = true;
+      }
     }
   };
 
@@ -82,7 +84,9 @@ class Form extends React.Component<{}, FormState> {
     this.setState({
       inputBlank: false,
     });
-    event.currentTarget.submitform.disabled = this.state.inputBlank;
+    if (this.formRef.current) {
+      this.formRef.current.disabled = this.state.inputBlank;
+    }
   };
 
   handleValidation = () => {
@@ -169,13 +173,14 @@ class Form extends React.Component<{}, FormState> {
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}
           className="form"
+          data-testid="form"
           ref={this.formRef}
         >
           <label>
             Name
             <input name="name" type="text" ref={this.nameRef} />
           </label>
-          {nameError && <p className='error-message'>Please enter a valid name</p>}
+          {nameError && <p className='error-message' data-testid='error-message'>Please enter a valid name</p>}
           <label>
             Email
             <input name="email" type="text" ref={this.emailRef} />
