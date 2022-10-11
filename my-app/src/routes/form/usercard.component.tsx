@@ -18,7 +18,7 @@ class UserCard extends Component<UserCardProps, {}> {
         <p>{`Gender: ${user.gender}`}</p>
         <p>{`Consent to Privacy Rules: ${user.agreedToPrivacyRules}`}</p>
         <p>{`Consent to Emails: ${user.agreedToEmails}`}</p>
-        <img src={user.img} alt={user.name}></img>
+         {user.img && <img width="70" height="100" src={URL.createObjectURL(user.img)} alt={user.name} />}
       </div>
     );
   }

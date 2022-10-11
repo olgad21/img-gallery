@@ -6,9 +6,11 @@ interface ConfirmationMessageProps {
 }
 const ConfirmationMessage: FC<ConfirmationMessageProps> = (props) => {
   return (
-    <div className='confirmation-message'>
-      <p>Saved!</p>
-      <button onClick = {props.onClick} className='close-button'>X</button>
+    <div className='confirmation-message-popup'>
+      <div className='confirmation-message'>
+        <p>Saved!</p>
+        <button onClick = {props.onClick} className='close-button'>X</button>
+      </div>
     </div>
   )
 }

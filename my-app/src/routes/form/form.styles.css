@@ -20,3 +20,8 @@ form * {
   cursor: pointer;
   font-size: 16px;
 }
+
+.error-message {
+  font-size: 9px;
+  color: red;
+}

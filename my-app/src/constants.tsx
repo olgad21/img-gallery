@@ -6,7 +6,7 @@ export interface User {
   agreedToPrivacyRules: boolean,
   agreedToEmails: boolean,
   gender: 'male' | 'female',
-  img: string,
+  img: File | null,
 }
 
 export const users: User[] = [
@@ -18,7 +18,7 @@ export const users: User[] = [
     agreedToPrivacyRules: true,
     agreedToEmails: false,
     gender: 'male',
-    img: '',
+    img: null,
   },
   {
     name: "Antonette",
@@ -28,7 +28,7 @@ export const users: User[] = [
     agreedToPrivacyRules: true,
     agreedToEmails: true,
     gender: 'female',
-    img: '',
+    img: null,
   }
 ]
 
