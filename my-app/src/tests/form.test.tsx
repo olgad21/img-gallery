@@ -42,21 +42,26 @@ describe("Form component", () => {
     fillForm();
     fireEvent.submit(form);
 
-    const nameInCard = screen.getAllByTestId("cardName");
-    expect(nameInCard[0].textContent).toEqual(users[0].name);
+    setTimeout(() => {
+      const nameInCard = screen.getAllByTestId("cardName");
+      expect(nameInCard[0].textContent).toEqual(users[0].name);
 
-    const privacyInCard = screen.getAllByTestId("cardPrivacy");
-    expect(privacyInCard[0].textContent).toEqual(
-      `Consent to Privacy Rules: ${users[0].agreedToPrivacyRules.toString()}`
-    );
+      const privacyInCard = screen.getAllByTestId("cardPrivacy");
+      expect(privacyInCard[0].textContent).toEqual(
+        `Consent to Privacy Rules: ${users[0].agreedToPrivacyRules.toString()}`
+      );
+    }, 2000);
   });
 
   test("validation works", () => {
     render(<Form />);
     const form = screen.getByTestId("form");
     fireEvent.submit(form);
-    const errorMessage = screen.getByTestId("error-message");
-    expect(errorMessage).toBeDefined();
+
+    setTimeout(() => {
+      const errorMessage = screen.getByTestId("error-message");
+      expect(errorMessage).toBeDefined();
+    }, 2000);
   });
 
   test("confirmation message shows on successful submit", () => {
