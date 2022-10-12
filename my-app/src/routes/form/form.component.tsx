@@ -260,9 +260,9 @@ class Form extends React.Component<{}, FormState> {
           />
         </form>
 
-        {showConfirmation ? (
+        {showConfirmation && (
           <ConfirmationMessage onClick={this.handleCloseConfirmationMessage} />
-        ) : null}
+        )}
 
         <div className="card-list">
           {users.map((user) => {
