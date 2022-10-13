@@ -1,24 +1,24 @@
+import Photo from "Interfaces";
 import React, { Component } from "react";
 import "./card.styles.css";
-import { Monster } from "../../routes/home/home.component";
 
 interface CardProps {
-  monster: Monster;
+  photo: Photo;
 }
 
 class Card extends Component<CardProps> {
   render() {
-    const { name, username, website, email, id } = this.props.monster;
+    const { id, title, secret, server, farm} = this.props.photo;
     return (
       <div className="card-container" data-testid="card">
         <img
           alt="monster"
-          src={`https://robohash.org/${id}?set=set2&size=180x180`}
+          src={`https://live.staticflickr.com/${server}/${id}_${secret}_m.jpg}`}
         />
-        <h2>{name}</h2>
-        <p>{`Username: ${username}`}</p>
-        <p>{website}</p>
-        <p>{`E-mail: ${email}`}</p>
+        {/* <h2>{title}</h2> */}
+        {/* <p>{`Owner: ${owner}`}</p>
+        <p>{`ID: ${id}`}</p> */}
+        <p>{`ID: ${id}`}</p>
       </div>
     );
   }

@@ -1,23 +1,23 @@
-import React, { Component, ChangeEventHandler } from "react";
+import React, { Component, KeyboardEventHandler } from "react";
 import "./search-bar.styles.css";
 
 interface SearchBarProps {
-  onChangeHandler: ChangeEventHandler<HTMLInputElement>;
+  onChangeHandler: KeyboardEventHandler<HTMLInputElement>;
   className: string;
-  value: string;
+  defaultValue: string;
 }
 
 class SearchBar extends Component<SearchBarProps> {
   render() {
-    const { onChangeHandler, className, value } = this.props;
+    const { onChangeHandler, className, defaultValue } = this.props;
     return (
       <input
         data-testid="search-bar"
         className={`search-box ${className}`}
         type="search"
         placeholder="Search name"
-        onChange={onChangeHandler}
-        value={value}
+        onKeyUp={onChangeHandler}
+        defaultValue={defaultValue}
       />
     );
   }

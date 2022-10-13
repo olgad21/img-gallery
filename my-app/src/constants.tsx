@@ -49,4 +49,8 @@ const monsters = [
   },
 ];
 
+export const host = 'https://www.flickr.com/services/rest/?method=flickr.photos.search';
+
+export const apiKey = '9e74150fed9ef4748d739ad4f107079c';
+
 export default monsters;

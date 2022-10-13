@@ -1,19 +1,19 @@
+import Photo from "Interfaces";
 import React, { Component } from "react";
 import Card from "../card/card.component";
-import { Monster } from "../../routes/home/home.component";
 import "./card-list.styles.css";
 
 interface CardListProps {
-  monsters: Monster[];
+  photos: Photo[];
 }
 
 class CardList extends Component<CardListProps> {
   render() {
-    const { monsters } = this.props;
+    const { photos } = this.props;
     return (
       <div className="card-list" data-testid="card-list">
-        {monsters.map((monster) => {
-          return <Card key={monster.id} monster={monster} />;
+        {photos.map((photo) => {
+          return <Card key={photo.id} photo={photo} />;
         })}
       </div>
     );
