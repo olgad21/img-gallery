@@ -4,16 +4,19 @@ import SearchBar from "../../components/search-bar/search-bar.component";
 import { getData } from "../../utils/data.utils";
 import { host, apiKey } from '../../constants';
 import Photo, { FlickrResponse } from "Interfaces";
+import DownloadMessage from "components/download-message/download-message.component";
 
 export type HomeState = {
   photos: Photo[];
   searchValue: string;
+  download: boolean;
 };
 
 class Home extends Component<{}, HomeState> {
   state: HomeState = {
     photos: [],
     searchValue: localStorage.getItem("search") || "",
+    download: true,
   };
 
   componentDidMount() {
@@ -33,12 +36,13 @@ class Home extends Component<{}, HomeState> {
   };
 
   fetchUsers = async () => {
+    this.state.download = true;
     const response = await getData<FlickrResponse>(
       `${host}&api_key=${apiKey}&text=${this.state.searchValue}&per_page=100&page=1&format=json&nojsoncallback=1`
     );
     const photos = response.photos.photo;
     this.setState({ photos: photos });
-    console.log(response, 222);
+    this.state.download = false;
   };
 
   saveToStorage = () => {
@@ -52,17 +56,17 @@ class Home extends Component<{}, HomeState> {
   };
 
   render() {
-    const { photos, searchValue } = this.state;
-
+    const { photos, searchValue, download } = this.state;
     return (
-      <div className="App">
+      <div className="App" id='home'>
         <h1 className="app-title">Image Gallery</h1>
         <SearchBar
           onChangeHandler={this.onSearchChange}
           className="monsters-search-box"
           defaultValue={searchValue}
         />
-        <CardList photos={photos} />
+        {download && <DownloadMessage />}
+        <CardList photos={photos}/>
       </div>
     );
   }

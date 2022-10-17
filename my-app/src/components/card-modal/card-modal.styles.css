@@ -1,0 +1,27 @@
+.modal-content {
+  position: relative;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  width: 40%;
+  padding: 2rem;
+  margin: auto;
+  font-size: 22px;
+  color: #0ccac4;
+}
+
+.modal-button {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  color: red;
+  background-color: transparent;
+  border: none;
+}
+
+.modal-button:hover {
+  transform: scale(1.4);
+  color: brown;
+}
