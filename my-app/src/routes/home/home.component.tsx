@@ -16,11 +16,12 @@ class Home extends Component<{}, HomeState> {
   state: HomeState = {
     photos: [],
     searchValue: localStorage.getItem("search") || "",
-    download: true,
+    download: false,
   };
 
   componentDidMount() {
-    window.removeEventListener("beforeunload", this.saveToStorage);
+    window.addEventListener("beforeunload", this.saveToStorage);
+    this.fetchUsers();
   };
 
   componentWillUnmount() {
