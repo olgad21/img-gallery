@@ -21,7 +21,6 @@ class Home extends Component<{}, HomeState> {
 
   componentDidMount() {
     window.removeEventListener("beforeunload", this.saveToStorage);
-    this.fetchUsers();
   };
 
   componentWillUnmount() {
