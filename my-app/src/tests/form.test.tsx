@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import Form from "../routes/form/form.component";
 import { users } from "../constants";
 
@@ -40,7 +40,9 @@ describe("Form component", () => {
     render(<Form />);
     const form = screen.getByTestId("form");
     fillForm();
-    fireEvent.submit(form);
+    act(() => {
+      fireEvent.submit(form);
+    })
 
     setTimeout(() => {
       const nameInCard = screen.getAllByTestId("cardName");
@@ -56,7 +58,9 @@ describe("Form component", () => {
   test("validation works", () => {
     render(<Form />);
     const form = screen.getByTestId("form");
-    fireEvent.submit(form);
+    act(() => {
+      fireEvent.submit(form);
+    })
 
     setTimeout(() => {
       const errorMessage = screen.getByTestId("error-message");
@@ -69,7 +73,9 @@ describe("Form component", () => {
     const form = screen.getByTestId("form");
     fillForm();
 
-    fireEvent.submit(form);
+    act(() => {
+      fireEvent.submit(form);
+    })
 
     setTimeout(() => {
       const confirmationMessage = screen.getByTestId("confirmation-message");

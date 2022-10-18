@@ -1,7 +1,7 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import Home from "../routes/home/home.component";
-import monsters from "../constants";
+import { responsePhotos, flickrResponse } from "../constants";
 
 afterAll(() => {
   jest.resetAllMocks();
@@ -9,21 +9,21 @@ afterAll(() => {
 
 global.fetch = jest.fn().mockImplementation(() =>
   Promise.resolve({
-    json: async () => Promise.resolve(monsters),
+    json: async () => Promise.resolve(flickrResponse),
   })
 );
 
-test("cards are rendered according to search value", async () => {
+test("cards are rendered after search", () => {
   render(<Home />);
 
-  const cardList = await screen.findAllByTestId("card");
-
-  expect(cardList?.length).toBe(monsters.length);
-
   const input = screen.getByTestId("search-bar") as HTMLInputElement;
-  fireEvent.change(input, { target: { value: monsters[0].name } });
+  act(() => {
+    fireEvent.keyUp(input, { target: { value: flickrResponse.photos[0].photo[0].title } }); 
+  });
 
-  const cardListFiltered = await screen.findAllByTestId("card");
+  setTimeout(() => {
+    const cardList = screen.getAllByTestId("card");
+    expect(cardList?.length).toBe(flickrResponse.photos[0].photo.length);
+  }, 1000);
 
-  expect(cardListFiltered?.length).toBe(1);
 });
