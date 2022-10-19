@@ -8,40 +8,33 @@ interface CardProps {
 }
 
 interface CardState {
-  showModal: boolean,
+  showModal: boolean;
 }
 
 class Card extends Component<CardProps, CardState> {
   state: CardState = {
     showModal: false,
-  }
+  };
 
-  openModal = () => {this.setState({
-      showModal: true
-    })
-  }
+  toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
-  closeModal = () => {
-    this.setState({
-      showModal: false
-    })
-  }
-  
   render() {
     const { showModal } = this.state;
 
     const { id, secret, server } = this.props.photo;
     return (
-      <div className="card-container" data-testid="card" onClick={this.openModal}>
+      <div
+        className="card-container"
+        data-testid="card"
+        onClick={this.toggleModal}
+      >
         <img
           alt="monster"
           src={`https://live.staticflickr.com/${server}/${id}_${secret}_m.jpg}`}
         />
         <p>{`ID: ${id}`}</p>
         {showModal && (
-          <Modal 
-            closeModal={this.closeModal}
-            photo = {this.props.photo}/>
+          <Modal toggleModal={this.toggleModal} photo={this.props.photo} />
         )}
       </div>
     );

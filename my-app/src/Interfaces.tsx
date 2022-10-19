@@ -8,16 +8,16 @@ interface Photo {
 }
 
 export interface FlickrResponse {
-  stat: string,
-  photos: ResponsePhotos,
+  stat: string;
+  photos: ResponsePhotos;
 }
 
 interface ResponsePhotos {
-  page: number,
-  pages: number,
-  perpage: number,
-  total: number,
-  photo: Photo[],
+  page: number;
+  pages: number;
+  perpage: number;
+  total: number;
+  photo: Photo[];
 }
 
 export default Photo;

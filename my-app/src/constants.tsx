@@ -65,8 +65,8 @@ const photos = [
     secret: "d236070f4f",
     server: "65535",
     farm: "66",
-  }
-]
+  },
+];
 
 export const responsePhotos = [
   {
@@ -75,16 +75,17 @@ export const responsePhotos = [
     perpage: 2,
     total: 2,
     photo: photos,
-  }
-]
+  },
+];
 
 export const flickrResponse = {
-  stat: 'OK',
+  stat: "OK",
   photos: responsePhotos,
-}
+};
 
-export const host = 'https://www.flickr.com/services/rest/?method=flickr.photos.search';
+export const host =
+  "https://www.flickr.com/services/rest/?method=flickr.photos.search";
 
-export const apiKey = '9e74150fed9ef4748d739ad4f107079c';
+export const apiKey = "9e74150fed9ef4748d739ad4f107079c";
 
 export default monsters;

@@ -42,7 +42,7 @@ describe("Form component", () => {
     fillForm();
     act(() => {
       fireEvent.submit(form);
-    })
+    });
 
     setTimeout(() => {
       const nameInCard = screen.getAllByTestId("cardName");
@@ -60,7 +60,7 @@ describe("Form component", () => {
     const form = screen.getByTestId("form");
     act(() => {
       fireEvent.submit(form);
-    })
+    });
 
     setTimeout(() => {
       const errorMessage = screen.getByTestId("error-message");
@@ -75,7 +75,7 @@ describe("Form component", () => {
 
     act(() => {
       fireEvent.submit(form);
-    })
+    });
 
     setTimeout(() => {
       const confirmationMessage = screen.getByTestId("confirmation-message");

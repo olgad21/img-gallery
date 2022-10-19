@@ -1,22 +1,25 @@
 import Photo from "Interfaces";
 import React, { FC, MouseEvent } from "react";
 import { createPortal } from "react-dom";
-import '../../routes/form/confirmationMessage.styles.css';
-import './card-modal.styles.css';
+import "../../routes/form/confirmationMessage.styles.css";
+import "./card-modal.styles.css";
 
 interface ModalProps {
-  closeModal: () => void;
+  toggleModal: () => void;
   photo: Photo;
 }
 
-const ModalContent: FC<ModalProps> = ({ closeModal, photo }) => {
+const ModalContent: FC<ModalProps> = ({ toggleModal, photo }) => {
   const { id, title, secret, server, owner } = photo;
 
   const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
 
-    if ((e.target as HTMLDivElement | HTMLButtonElement).className === 'confirmation-message-popup') {
-      closeModal();
+    if (
+      (e.target as HTMLDivElement | HTMLButtonElement).className ===
+      "confirmation-message-popup"
+    ) {
+      toggleModal();
     }
   };
 
@@ -27,7 +30,7 @@ const ModalContent: FC<ModalProps> = ({ closeModal, photo }) => {
       data-testid="confirmation-message"
     >
       <div className="modal-content">
-        <button onClick={closeModal} className="modal-button">
+        <button onClick={toggleModal} className="modal-button">
           X
         </button>
         <h2>{title}</h2>
@@ -43,11 +46,11 @@ const ModalContent: FC<ModalProps> = ({ closeModal, photo }) => {
   );
 };
 
-const Modal: FC<ModalProps> = ({ closeModal, photo }) => {
+const Modal: FC<ModalProps> = ({ toggleModal, photo }) => {
   return createPortal(
-    <ModalContent photo={photo} closeModal={closeModal} />,
-    document.getElementById('home') as Element
-  )
-}
+    <ModalContent photo={photo} toggleModal={toggleModal} />,
+    document.getElementById("home") as Element
+  );
+};
 
 export default Modal;

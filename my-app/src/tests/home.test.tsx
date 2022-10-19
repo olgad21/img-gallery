@@ -18,12 +18,13 @@ test("cards are rendered after search", () => {
 
   const input = screen.getByTestId("search-bar") as HTMLInputElement;
   act(() => {
-    fireEvent.keyUp(input, { target: { value: flickrResponse.photos[0].photo[0].title } }); 
+    fireEvent.keyUp(input, {
+      target: { value: flickrResponse.photos[0].photo[0].title },
+    });
   });
 
   setTimeout(() => {
     const cardList = screen.getAllByTestId("card");
     expect(cardList?.length).toBe(flickrResponse.photos[0].photo.length);
   }, 1000);
-
 });
