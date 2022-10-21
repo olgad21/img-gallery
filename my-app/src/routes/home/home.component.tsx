@@ -75,8 +75,7 @@ const Home = () => {
         defaultValue={searchValue}
       />
       {isLoading && <DownloadMessage />}
-      {photos && <CardList photos={photos} />}
-      {!photos.length && <ErrorMessage />}
+      {photos.length ? <CardList photos={photos} /> : <ErrorMessage />}
     </div>
   );
 };
