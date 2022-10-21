@@ -4,7 +4,7 @@ import "./confirmationMessage.styles.css";
 interface ConfirmationMessageProps {
   onClick: () => void;
 }
-const ConfirmationMessage: FC<ConfirmationMessageProps> = (props) => {
+const ConfirmationMessage: FC<ConfirmationMessageProps> = ({ onClick }) => {
   return (
     <div
       className="confirmation-message-popup"
@@ -12,7 +12,7 @@ const ConfirmationMessage: FC<ConfirmationMessageProps> = (props) => {
     >
       <div className="confirmation-message">
         <p>Saved!</p>
-        <button onClick={props.onClick} className="close-button">
+        <button onClick={onClick} className="close-button">
           X
         </button>
       </div>

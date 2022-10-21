@@ -12,6 +12,14 @@ export type HomeState = {
   isLoading: boolean;
 };
 
+const ErrorMessage = () => {
+  return (
+    <div>
+      <p>No results containing all your search terms were found.</p>
+    </div>
+  );
+};
+
 const Home = () => {
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem("search") || ""
@@ -43,14 +51,19 @@ const Home = () => {
   };
 
   const fetchUsers = async (searchedText: string) => {
-    setIsLoading(true);
-    const response = await getData<FlickrResponse>(
-      `${host}&api_key=${apiKey}&text=${searchedText}&per_page=100&page=1&format=json&nojsoncallback=1`
-    );
-    const photos = response.photos.photo;
+    try {
+      setIsLoading(true);
+      const response = await getData<FlickrResponse>(
+        `${host}&api_key=${apiKey}&text=${searchedText}&per_page=100&page=1&format=json&nojsoncallback=1`
+      );
+      const photos = response.photos.photo;
 
-    setPhotos(photos);
-    setIsLoading(false);
+      setPhotos(photos);
+      setIsLoading(false);
+    } catch {
+      setPhotos([]);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -62,7 +75,8 @@ const Home = () => {
         defaultValue={searchValue}
       />
       {isLoading && <DownloadMessage />}
-      <CardList photos={photos} />
+      {photos && <CardList photos={photos} />}
+      {!photos.length && <ErrorMessage />}
     </div>
   );
 };

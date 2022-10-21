@@ -1,5 +1,5 @@
-import React, { createRef, FormEvent, ChangeEvent } from "react";
-import { User, users } from "../../constants";
+import React, { createRef, FormEvent, FC, useState } from "react";
+import { User } from "../../constants";
 import "../../components/card-list/card-list.styles.css";
 import "./form.styles.css";
 import UserCard from "./usercard.component";
@@ -14,79 +14,64 @@ type Errors = {
   privacyError: boolean;
 };
 
-interface FormState {
-  users: User[];
-  showConfirmation: boolean;
-  inputBlank: boolean;
-  errors: Errors;
-}
+const Form: FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [inputBlank, setInputBlank] = useState(true);
+  const [errors, setErrors] = useState<Errors>({
+    nameError: false,
+    emailError: false,
+    birthdayError: false,
+    countryError: false,
+    imgError: false,
+    privacyError: false,
+  });
 
-class Form extends React.Component<{}, FormState> {
-  state: FormState = {
-    users: [],
-    showConfirmation: false,
-    inputBlank: true,
-    errors: {
-      nameError: false,
-      emailError: false,
-      birthdayError: false,
-      countryError: false,
-      imgError: false,
-      privacyError: false,
-    },
-  };
+  const nameRef = createRef<HTMLInputElement>();
+  const emailRef = createRef<HTMLInputElement>();
+  const birthdayRef = createRef<HTMLInputElement>();
+  const countryRef = createRef<HTMLSelectElement>();
+  const agreedToPrivacyRulesRef = createRef<HTMLInputElement>();
+  const agreedToEmailsRef = createRef<HTMLInputElement>();
+  const maleRef = createRef<HTMLInputElement>();
+  const femaleRef = createRef<HTMLInputElement>();
+  const imgRef = createRef<HTMLInputElement>();
+  const formRef = createRef<HTMLFormElement>();
 
-  nameRef = createRef<HTMLInputElement>();
-  emailRef = createRef<HTMLInputElement>();
-  birthdayRef = createRef<HTMLInputElement>();
-  countryRef = createRef<HTMLSelectElement>();
-  agreedToPrivacyRulesRef = createRef<HTMLInputElement>();
-  agreedToEmailsRef = createRef<HTMLInputElement>();
-  maleRef = createRef<HTMLInputElement>();
-  femaleRef = createRef<HTMLInputElement>();
-  imgRef = createRef<HTMLInputElement>();
-  formRef = createRef<HTMLFormElement>();
-
-  handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const isValidForm = this.handleValidation();
+    const isValidForm = handleValidation();
 
     if (isValidForm) {
       const newUser: User = {
-        name: this.nameRef.current?.value ?? "",
-        email: this.emailRef.current?.value ?? "",
-        birthday: new Date(this.birthdayRef.current!.value),
-        country: this.countryRef.current?.value ?? "",
-        agreedToPrivacyRules:
-          this.agreedToPrivacyRulesRef.current?.checked ?? false,
-        agreedToEmails: this.agreedToEmailsRef.current?.checked ?? false,
-        gender: this.maleRef.current?.checked ? "male" : "female",
-        img: this.imgRef.current?.files?.[0] ?? null,
+        name: nameRef.current?.value ?? "",
+        email: emailRef.current?.value ?? "",
+        birthday: new Date(birthdayRef.current!.value),
+        country: countryRef.current?.value ?? "",
+        agreedToPrivacyRules: agreedToPrivacyRulesRef.current?.checked ?? false,
+        agreedToEmails: agreedToEmailsRef.current?.checked ?? false,
+        gender: maleRef.current?.checked ? "male" : "female",
+        img: imgRef.current?.files?.[0] ?? null,
       };
 
-      this.setState({
-        users: [...this.state.users, newUser],
-        showConfirmation: true,
-      });
-
-      this.formRef.current?.reset();
+      setUsers([...users, newUser]);
+      setShowConfirmation(true);
+      formRef.current?.reset();
     } else {
-      if (this.formRef.current && this.formRef.current.submitform) {
-        this.formRef.current.submitform.disabled = true;
+      if (formRef.current && formRef.current.submitform) {
+        formRef.current.submitform.disabled = true;
       }
     }
   };
 
-  handleChange = () => {
-    this.setState({
-      inputBlank: false,
-    });
-    if (this.formRef.current && this.formRef.current.submitform) {
-      this.formRef.current.submitform.disabled = this.state.inputBlank;
+  const handleChange = () => {
+    setInputBlank(false);
+    if (formRef.current && formRef.current.submitform) {
+      formRef.current.submitform.disabled = inputBlank;
     }
   };
 
-  handleValidation = () => {
+  const handleValidation = () => {
     let isValidForm = true;
     let errors: Errors = {
       nameError: false,
@@ -98,9 +83,9 @@ class Form extends React.Component<{}, FormState> {
     };
 
     if (
-      !this.nameRef.current?.value ||
-      this.nameRef.current?.value.length < 2 ||
-      !/^[A-Za-z\s]*$/.test(this.nameRef.current?.value)
+      !nameRef.current?.value ||
+      nameRef.current?.value.length < 2 ||
+      !/^[A-Za-z\s]*$/.test(nameRef.current?.value)
     ) {
       errors.nameError = true;
       isValidForm = false;
@@ -108,170 +93,159 @@ class Form extends React.Component<{}, FormState> {
       errors.nameError = false;
     }
 
-    if (
-      !this.emailRef.current?.value ||
-      !this.emailRef.current?.value.includes("@")
-    ) {
+    if (!emailRef.current?.value || !emailRef.current?.value.includes("@")) {
       errors.emailError = true;
       isValidForm = false;
     } else {
       errors.emailError = false;
     }
 
-    if (!this.birthdayRef.current?.value) {
+    if (!birthdayRef.current?.value) {
       errors.birthdayError = true;
       isValidForm = false;
     } else {
       errors.birthdayError = false;
     }
 
-    if (!this.countryRef.current?.value) {
+    if (!countryRef.current?.value) {
       errors.countryError = true;
       isValidForm = false;
     } else {
       errors.countryError = false;
     }
 
-    if (!this.agreedToPrivacyRulesRef.current?.checked) {
+    if (!agreedToPrivacyRulesRef.current?.checked) {
       errors.privacyError = true;
       isValidForm = false;
     } else {
       errors.privacyError = false;
     }
 
-    this.setState({
-      errors: errors,
-    });
+    setErrors(errors);
 
     return isValidForm;
   };
 
-  handleCloseConfirmationMessage = () => {
-    this.setState({
-      showConfirmation: false,
-    });
+  const handleCloseConfirmationMessage = () => {
+    setShowConfirmation(false);
   };
 
-  render() {
-    const { inputBlank, showConfirmation, users } = this.state;
+  const { nameError, emailError, birthdayError, countryError, privacyError } =
+    errors;
 
-    const { nameError, emailError, birthdayError, countryError, privacyError } =
-      this.state.errors;
-
-    return (
-      <div>
-        <form
-          onSubmit={this.handleSubmit}
-          onChange={this.handleChange}
-          className="form"
-          data-testid="form"
-          ref={this.formRef}
-        >
-          <label>
-            Name
-            <input name="name" type="text" ref={this.nameRef} />
-          </label>
-          {nameError && (
-            <p className="error-message" data-testid="error-message">
-              Please enter a valid name
-            </p>
-          )}
-          <label>
-            Email
-            <input name="email" type="text" ref={this.emailRef} />
-          </label>
-          {emailError && (
-            <p className="error-message">Please enter a valid email</p>
-          )}
-          <label>
-            Birthday
-            <input name="birthday" type="date" ref={this.birthdayRef} />
-          </label>
-          {birthdayError && (
-            <p className="error-message">Please enter a valid date</p>
-          )}
-          <label>
-            Country
-            <select ref={this.countryRef}>
-              <option value="USA">USA</option>
-              <option value="Russia">Russia</option>
-              <option value="England">England</option>
-              <option value="Canada">Canada</option>
-            </select>
-          </label>
-          {countryError && (
-            <p className="error-message">Please choose a country</p>
-          )}
-          <label>
-            Agree to Privacy Rules
-            <input
-              name="agreedToPrivacyRules"
-              type="checkbox"
-              ref={this.agreedToPrivacyRulesRef}
-            />
-          </label>
-          {privacyError && (
-            <p className="error-message">Please agree to our Privacy Terms</p>
-          )}
-          <label>
-            Agree to Emails
-            <input
-              name="agreedToEmails"
-              type="checkbox"
-              ref={this.agreedToEmailsRef}
-            />
-          </label>
-          <label>
-            Gender
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="Male"
-                  ref={this.maleRef}
-                  name="gender"
-                  defaultChecked
-                />
-                Male
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="Female"
-                  ref={this.femaleRef}
-                  name="gender"
-                />
-                Female
-              </label>
-            </div>
-          </label>
-          <label>
-            Avatar
-            <input name="file" type="file" ref={this.imgRef} />
-          </label>
-          <input
-            type="submit"
-            value="Submit"
-            name="submitform"
-            className="submit-input"
-            disabled={inputBlank}
-          />
-        </form>
-
-        {showConfirmation && (
-          <ConfirmationMessage onClick={this.handleCloseConfirmationMessage} />
+  return (
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        onChange={handleChange}
+        className="form"
+        data-testid="form"
+        ref={formRef}
+      >
+        <label>
+          Name
+          <input name="name" type="text" ref={nameRef} />
+        </label>
+        {nameError && (
+          <p className="error-message" data-testid="error-message">
+            Please enter a valid name
+          </p>
         )}
+        <label>
+          Email
+          <input name="email" type="text" ref={emailRef} />
+        </label>
+        {emailError && (
+          <p className="error-message">Please enter a valid email</p>
+        )}
+        <label>
+          Birthday
+          <input name="birthday" type="date" ref={birthdayRef} />
+        </label>
+        {birthdayError && (
+          <p className="error-message">Please enter a valid date</p>
+        )}
+        <label>
+          Country
+          <select ref={countryRef}>
+            <option value="USA">USA</option>
+            <option value="Russia">Russia</option>
+            <option value="England">England</option>
+            <option value="Canada">Canada</option>
+          </select>
+        </label>
+        {countryError && (
+          <p className="error-message">Please choose a country</p>
+        )}
+        <label>
+          Agree to Privacy Rules
+          <input
+            name="agreedToPrivacyRules"
+            type="checkbox"
+            ref={agreedToPrivacyRulesRef}
+          />
+        </label>
+        {privacyError && (
+          <p className="error-message">Please agree to our Privacy Terms</p>
+        )}
+        <label>
+          Agree to Emails
+          <input
+            name="agreedToEmails"
+            type="checkbox"
+            ref={agreedToEmailsRef}
+          />
+        </label>
+        <label>
+          Gender
+          <div className="radio">
+            <label>
+              <input
+                type="radio"
+                value="Male"
+                ref={maleRef}
+                name="gender"
+                defaultChecked
+              />
+              Male
+            </label>
+          </div>
+          <div className="radio">
+            <label>
+              <input
+                type="radio"
+                value="Female"
+                ref={femaleRef}
+                name="gender"
+              />
+              Female
+            </label>
+          </div>
+        </label>
+        <label>
+          Avatar
+          <input name="file" type="file" ref={imgRef} />
+        </label>
+        <input
+          type="submit"
+          value="Submit"
+          name="submitform"
+          className="submit-input"
+          disabled={inputBlank}
+        />
+      </form>
 
-        <div className="card-list">
-          {users.map((user) => {
-            return <UserCard key={user.email} user={user} />;
-          })}
-        </div>
+      {showConfirmation && (
+        <ConfirmationMessage onClick={handleCloseConfirmationMessage} />
+      )}
+
+      <div className="card-list">
+        {users.map((user) => {
+          return <UserCard key={user.email} user={user} />;
+        })}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Form;

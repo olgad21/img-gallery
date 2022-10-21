@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import "../../routes/form/confirmationMessage.styles.css";
 import "./download-message.styles.css";
 

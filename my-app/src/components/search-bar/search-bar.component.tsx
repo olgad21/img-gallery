@@ -1,4 +1,4 @@
-import React, { Component, KeyboardEventHandler } from "react";
+import React, { KeyboardEventHandler, FC } from "react";
 import "./search-bar.styles.css";
 
 interface SearchBarProps {
@@ -7,20 +7,21 @@ interface SearchBarProps {
   defaultValue: string;
 }
 
-class SearchBar extends Component<SearchBarProps> {
-  render() {
-    const { onChangeHandler, className, defaultValue } = this.props;
-    return (
-      <input
-        data-testid="search-bar"
-        className={`search-box ${className}`}
-        type="search"
-        placeholder="Search name"
-        onKeyUp={onChangeHandler}
-        defaultValue={defaultValue}
-      />
-    );
-  }
-}
+const SearchBar: FC<SearchBarProps> = ({
+  onChangeHandler,
+  className,
+  defaultValue,
+}) => {
+  return (
+    <input
+      data-testid="search-bar"
+      className={`search-box ${className}`}
+      type="search"
+      placeholder="Search name"
+      onKeyUp={onChangeHandler}
+      defaultValue={defaultValue}
+    />
+  );
+};
 
 export default SearchBar;

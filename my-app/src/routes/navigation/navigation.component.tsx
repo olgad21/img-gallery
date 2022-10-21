@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import "./navigation.styles.css";
 
-const NavigationBar: React.FC = () => {
+const NavigationBar: FC = () => {
   return (
     <Fragment>
       <div className="navigation">
