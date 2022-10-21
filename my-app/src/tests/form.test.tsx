@@ -1,8 +1,14 @@
 import React from "react";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import Form from "../routes/form/form.component";
 import { users } from "../constants";
-import userEvent from '@testing-library/user-event';
+import userEvent from "@testing-library/user-event";
 
 const fillForm = () => {
   const nameInput = screen.getByLabelText("Name") as HTMLInputElement;
@@ -69,21 +75,20 @@ describe("Form component", () => {
     }, 2000);
   });
 
-  test("confirmation message shows on successful submit", async() => {
+  test("confirmation message shows on successful submit", async () => {
     const user = userEvent.setup();
     render(<Form />);
     const form = screen.getByTestId("form");
     fillForm();
 
-    const submitbtn = screen.getByText('Submit');
+    const submitbtn = screen.getByText("Submit");
 
     // await user.click(submitbtn);
     await waitFor(() => {
       user.click(submitbtn);
     });
 
-    const card = await screen.findByTestId('formcard');
-
+    const card = await screen.findByTestId("formcard");
 
     // act(() => {
     //   fireEvent.submit(form);

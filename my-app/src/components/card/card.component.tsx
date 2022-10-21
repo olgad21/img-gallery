@@ -1,6 +1,6 @@
 import Modal from "components/card-modal/card-modal.component";
 import Photo from "Interfaces";
-import React, { Component, MouseEvent } from "react";
+import React, { Component } from "react";
 import "./card.styles.css";
 
 interface CardProps {

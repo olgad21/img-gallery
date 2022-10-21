@@ -12,6 +12,14 @@ export type HomeState = {
   isLoading: boolean;
 };
 
+const ErrorMessage = () => {
+  return (
+    <div>
+      <p>No results containing all your search terms were found.</p>
+    </div>
+  );
+};
+
 class Home extends Component<{}, HomeState> {
   state: HomeState = {
     photos: [],
@@ -30,12 +38,16 @@ class Home extends Component<{}, HomeState> {
   }
 
   fetchUsers = async (searchedText: string) => {
-    this.setState({ isLoading: true });
-    const response = await getData<FlickrResponse>(
-      `${host}&api_key=${apiKey}&text=${searchedText}&per_page=100&page=1&format=json&nojsoncallback=1`
-    );
-    const photos = response.photos.photo;
-    this.setState({ photos: photos, isLoading: false });
+    try {
+      this.setState({ isLoading: true });
+      const response = await getData<FlickrResponse>(
+        `${host}&api_key=${apiKey}&text=${searchedText}&per_page=100&page=1&format=json&nojsoncallback=1`
+      );
+      const photos = response.photos.photo;
+      this.setState({ photos: photos, isLoading: false });
+    } catch {
+      this.setState({ photos: [], isLoading: false });
+    }
   };
 
   saveToStorage = () => {
@@ -51,6 +63,7 @@ class Home extends Component<{}, HomeState> {
 
   render() {
     const { photos, searchValue, isLoading } = this.state;
+    console.log(photos);
     return (
       <div className="App" id="home">
         <h1 className="app-title">Image Gallery</h1>
@@ -60,7 +73,8 @@ class Home extends Component<{}, HomeState> {
           defaultValue={searchValue}
         />
         {isLoading && <DownloadMessage />}
-        <CardList photos={photos} />
+        {photos && <CardList photos={photos} />}
+        {!photos.length && <ErrorMessage />}
       </div>
     );
   }
