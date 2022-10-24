@@ -1,5 +1,6 @@
 import Modal from "components/card-modal/card-modal.component";
 import Photo from "Interfaces";
+
 import React, { useState } from "react";
 import "./card.styles.css";
 
