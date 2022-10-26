@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler, useEffect, useState } from "react";
+import React, { KeyboardEventHandler, useEffect, useState, FC } from "react";
 import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
 import { getData } from "../../utils/data.utils";
@@ -20,7 +20,7 @@ const ErrorMessage = () => {
   );
 };
 
-const Home = () => {
+const Home: FC = () => {
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem("search") || ""
   );
@@ -30,14 +30,12 @@ const Home = () => {
   useEffect(() => {
     window.addEventListener("beforeunload", saveToStorage);
     fetchUsers(searchValue);
-  }, []);
 
-  useEffect(() => {
     return () => {
       saveToStorage();
       window.removeEventListener("beforeunload", saveToStorage);
     };
-  });
+  }, []);
 
   const saveToStorage = () => {
     localStorage.setItem("search", searchValue);
