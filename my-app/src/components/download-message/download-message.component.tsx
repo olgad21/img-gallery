@@ -4,7 +4,7 @@ import "./download-message.styles.css";
 
 const DownloadMessage: FC = () => {
   return (
-    <div className="confirmation-message-popup">
+    <div className="confirmation-message-popup" data-testid="loading">
       <p className="download-message">Downloading...</p>
     </div>
   );
