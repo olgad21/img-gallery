@@ -1,5 +1,5 @@
-import React, { createRef, FormEvent, FC, useState } from "react";
-import { useForm, SubmitHandler, appendErrors } from "react-hook-form";
+import React, { createRef, FC, useState } from "react";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { User } from "../../constants";
@@ -26,15 +26,18 @@ const Form: FC = () => {
     register,
     reset,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<UserForm>({
     resolver: yupResolver(schema),
     mode: "onSubmit",
+    defaultValues: {
+      gender: "female",
+    },
   });
 
-  const [inputBlank, setInputBlank] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const formRef = createRef<HTMLFormElement>();
 
@@ -49,21 +52,15 @@ const Form: FC = () => {
     reset();
   };
 
-  const handleChange = () => {
-    setInputBlank(false);
-    if (formRef.current && formRef.current.submitform) {
-      formRef.current.submitform.disabled = inputBlank;
-    }
+  const handleChange = async () => {
+    setSubmitDisabled(false);
   };
 
   return (
     <div>
       <form
-        onSubmit={handleSubmit(onSubmit, (err) => {
-          console.log(err, 555);
-          if (formRef?.current?.submitform) {
-            formRef.current.submitform.disabled = true;
-          }
+        onSubmit={handleSubmit(onSubmit, () => {
+          setSubmitDisabled(true);
         })}
         onChange={handleChange}
         className="form"
@@ -108,18 +105,13 @@ const Form: FC = () => {
           Gender
           <div className="radio">
             <label>
-              <input
-                type="radio"
-                value="Male"
-                {...register("gender")}
-                defaultChecked
-              />
+              <input type="radio" value="Male" {...register("gender")} />
               Male
             </label>
           </div>
           <div className="radio">
             <label>
-              <input type="radio" value="Female" {...register("gender")} />
+              <input type="radio" value="female" {...register("gender")} />
               Female
             </label>
           </div>
@@ -133,7 +125,7 @@ const Form: FC = () => {
           value="Submit"
           name="submitform"
           className="submit-input"
-          disabled={inputBlank || Object.keys(errors).length > 0}
+          disabled={submitDisabled}
         />
       </form>
       {showConfirmation && (
