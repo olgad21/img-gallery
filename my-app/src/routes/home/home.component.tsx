@@ -1,13 +1,14 @@
-import React, { KeyboardEventHandler, useEffect, useState, FC } from "react";
+import React, { KeyboardEventHandler, useEffect, useState, FC, useContext } from "react";
 import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
 import { getData } from "../../utils/data.utils";
 import { host, apiKey } from "../../constants";
 import Photo, { FlickrResponse } from "Interfaces";
 import DownloadMessage from "components/download-message/download-message.component";
+import { SearchResultContext } from "contexts/search-result.context";
 
 export type HomeState = {
-  photos: Photo[];
+  photos: null | Photo[]; //
   searchValue: string;
   isLoading: boolean;
 };
@@ -21,15 +22,15 @@ const ErrorMessage = () => {
 };
 
 const Home: FC = () => {
+  
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem("search") || ""
   );
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  const { searchResult, setSearchResult } = useContext(SearchResultContext);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     window.addEventListener("beforeunload", saveToStorage);
-    fetchUsers(searchValue);
 
     return () => {
       saveToStorage();
@@ -56,10 +57,10 @@ const Home: FC = () => {
       );
       const photos = response.photos.photo;
 
-      setPhotos(photos);
+      setSearchResult(photos);
       setIsLoading(false);
     } catch {
-      setPhotos([]);
+      setSearchResult([]);
       setIsLoading(false);
     }
   };
@@ -73,9 +74,10 @@ const Home: FC = () => {
         defaultValue={searchValue}
       />
       {isLoading && <DownloadMessage />}
-      {photos.length ? <CardList photos={photos} /> : <ErrorMessage />}
+      {searchResult?.length ? <CardList photos={searchResult} /> : <ErrorMessage />}
     </div>
   );
 };
 
 export default Home;
+

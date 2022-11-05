@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import SearchResultProvider from "contexts/search-result.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter basename="/olgad21-REACT2022Q3">
-      <App />
+      <SearchResultProvider>
+        <App />
+      </SearchResultProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
