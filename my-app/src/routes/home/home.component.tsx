@@ -5,6 +5,9 @@ import { getData } from "../../utils/data.utils";
 import { host, apiKey } from "../../constants";
 import Photo, { FlickrResponse } from "Interfaces";
 import DownloadMessage from "components/download-message/download-message.component";
+import { photos as mockPhotos } from '../../constants';
+import { addPhotos, selectPhotos } from "redux/photosSlice";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 
 export type HomeState = {
   photos: Photo[];
@@ -21,10 +24,14 @@ const ErrorMessage = () => {
 };
 
 const Home: FC = () => {
+  const dispatch = useAppDispatch();
+  const photos = useAppSelector(selectPhotos);
+  console.log(photos);
+
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem("search") || ""
   );
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  // const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -50,17 +57,18 @@ const Home: FC = () => {
 
   const fetchUsers = async (searchedText: string) => {
     try {
-      setIsLoading(true);
-      const response = await getData<FlickrResponse>(
-        `${host}&api_key=${apiKey}&text=${searchedText}&per_page=100&page=1&format=json&nojsoncallback=1`
-      );
-      const photos = response.photos.photo;
+      // setIsLoading(true);
+      // const response = await getData<FlickrResponse>(
+      //   `${host}&api_key=${apiKey}&text=${searchedText}&per_page=100&page=1&format=json&nojsoncallback=1`
+      // );
+      // const photos = response.photos.photo;
+      dispatch(addPhotos(mockPhotos));
 
-      setPhotos(photos);
-      setIsLoading(false);
+      // setPhotos(photos);
+      // setIsLoading(false);
     } catch {
-      setPhotos([]);
-      setIsLoading(false);
+      // setPhotos([]);
+      // setIsLoading(false);
     }
   };
 

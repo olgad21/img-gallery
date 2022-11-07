@@ -49,7 +49,7 @@ const monsters = [
   },
 ];
 
-const photos = [
+export const photos = [
   {
     id: "52425432016",
     owner: "181776069@N02",
