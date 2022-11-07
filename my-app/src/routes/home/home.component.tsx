@@ -1,18 +1,13 @@
 import React, { KeyboardEventHandler, useEffect, useState, FC } from "react";
 import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
-import { getData } from "../../utils/data.utils";
-import { host, apiKey } from "../../constants";
-import Photo, { FlickrResponse } from "Interfaces";
+import Photo from "Interfaces";
 import DownloadMessage from "components/download-message/download-message.component";
-import { photos as mockPhotos } from '../../constants';
-import { addPhotos, selectPhotos } from "redux/photosSlice";
+import { fetchPhotos, selectPhotos, selectStatus } from "redux/photosSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 
 export type HomeState = {
-  photos: Photo[];
   searchValue: string;
-  isLoading: boolean;
 };
 
 const ErrorMessage = () => {
@@ -26,49 +21,37 @@ const ErrorMessage = () => {
 const Home: FC = () => {
   const dispatch = useAppDispatch();
   const photos = useAppSelector(selectPhotos);
-  console.log(photos);
+  const photosStatus = useAppSelector(selectStatus);
 
-  const [searchValue, setSearchValue] = useState(
-    localStorage.getItem("search") || ""
-  );
-  // const [photos, setPhotos] = useState<Photo[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", saveToStorage);
-    fetchUsers(searchValue);
-
-    return () => {
-      saveToStorage();
-      window.removeEventListener("beforeunload", saveToStorage);
-    };
-  }, []);
+  const initialSearchValue = localStorage.getItem("search") || "";
+  const [searchValue, setSearchValue] = useState(initialSearchValue);
 
   const saveToStorage = () => {
     localStorage.setItem("search", searchValue);
   };
 
-  const onSearchChange: KeyboardEventHandler<HTMLInputElement> = (event) => {
-    if (event.key === "Enter") {
-      setSearchValue((event.target as HTMLInputElement).value);
-      fetchUsers((event.target as HTMLInputElement).value);
-    }
+  const onFetchPhotos = (searchedText: string) => {
+    dispatch(fetchPhotos(searchedText));
   };
 
-  const fetchUsers = async (searchedText: string) => {
-    try {
-      // setIsLoading(true);
-      // const response = await getData<FlickrResponse>(
-      //   `${host}&api_key=${apiKey}&text=${searchedText}&per_page=100&page=1&format=json&nojsoncallback=1`
-      // );
-      // const photos = response.photos.photo;
-      dispatch(addPhotos(mockPhotos));
+  useEffect(() => {
+    onFetchPhotos(initialSearchValue);
+  }, []);
 
-      // setPhotos(photos);
-      // setIsLoading(false);
-    } catch {
-      // setPhotos([]);
-      // setIsLoading(false);
+  useEffect(() => {
+    window.addEventListener("beforeunload", saveToStorage);
+
+    return () => {
+      saveToStorage();
+      window.removeEventListener("beforeunload", saveToStorage);
+    };
+  }, [searchValue]);
+
+  const onSearchChange: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (event.key === "Enter") {
+      const value = (event.target as HTMLInputElement).value;
+      setSearchValue(value);
+      onFetchPhotos(value);
     }
   };
 
@@ -80,8 +63,8 @@ const Home: FC = () => {
         className="monsters-search-box"
         defaultValue={searchValue}
       />
-      {isLoading && <DownloadMessage />}
-      {photos.length ? <CardList photos={photos} /> : <ErrorMessage />}
+      {photosStatus === 'loading' && <DownloadMessage />}
+      {photosStatus === 'succeeded' && photos.length ? <CardList photos={photos} /> : <ErrorMessage />}
     </div>
   );
 };
