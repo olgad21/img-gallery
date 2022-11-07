@@ -7,6 +7,8 @@ import "../../components/card-list/card-list.styles.css";
 import "./form.styles.css";
 import UserCard from "./usercard.component";
 import ConfirmationMessage from "./confirmationMessage.component";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { addUsers, selectUsers } from "redux/usersSlice";
 
 type UserForm = User & { img: FileList | null };
 
@@ -35,7 +37,9 @@ const Form: FC = () => {
     },
   });
 
-  const [users, setUsers] = useState<User[]>([]);
+  const dispatch = useAppDispatch();
+  const users = useAppSelector(selectUsers);
+
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
@@ -47,7 +51,7 @@ const Form: FC = () => {
 
   const onSubmit = (user: UserForm) => {
     const newUser = { ...user, img: user?.img?.[0] || null };
-    setUsers([...users, newUser]);
+    dispatch(addUsers(newUser));
     setShowConfirmation(true);
     reset();
   };

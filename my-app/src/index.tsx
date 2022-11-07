@@ -15,7 +15,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter basename="/olgad21-REACT2022Q3">
         <App />
-      </BrowserRouter>   
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

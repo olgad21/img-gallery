@@ -1,9 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import photosReducer from './photosSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import photosReducer from "./photosSlice";
+import usersReducer from "./usersSlice";
 
 const store = configureStore({
   reducer: {
     photos: photosReducer,
+    users: usersReducer,
   },
 });
 

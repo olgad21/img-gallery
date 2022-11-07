@@ -1,7 +1,6 @@
 import React, { KeyboardEventHandler, useEffect, useState, FC } from "react";
 import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
-import Photo from "Interfaces";
 import DownloadMessage from "components/download-message/download-message.component";
 import { fetchPhotos, selectPhotos, selectStatus } from "redux/photosSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -63,8 +62,12 @@ const Home: FC = () => {
         className="monsters-search-box"
         defaultValue={searchValue}
       />
-      {photosStatus === 'loading' && <DownloadMessage />}
-      {photosStatus === 'succeeded' && photos.length ? <CardList photos={photos} /> : <ErrorMessage />}
+      {photosStatus === "loading" && <DownloadMessage />}
+      {photosStatus === "succeeded" && photos.length ? (
+        <CardList photos={photos} />
+      ) : (
+        <ErrorMessage />
+      )}
     </div>
   );
 };
