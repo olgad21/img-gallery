@@ -1,4 +1,4 @@
-import React, { createRef, FC, useState } from "react";
+import React, { createRef, FC, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,6 +7,7 @@ import "../../components/card-list/card-list.styles.css";
 import "./form.styles.css";
 import UserCard from "./usercard.component";
 import ConfirmationMessage from "./confirmationMessage.component";
+import { AppContext } from "contexts/context";
 
 type UserForm = User & { img: FileList | null };
 
@@ -35,7 +36,7 @@ const Form: FC = () => {
     },
   });
 
-  const [users, setUsers] = useState<User[]>([]); //
+  const { state, dispatch } = useContext(AppContext);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
@@ -47,7 +48,10 @@ const Form: FC = () => {
 
   const onSubmit = (user: UserForm) => {
     const newUser = { ...user, img: user?.img?.[0] || null };
-    setUsers([...users, newUser]);
+    dispatch({
+      type: "addUsers",
+      payload: newUser,
+    });
     setShowConfirmation(true);
     reset();
   };
@@ -133,7 +137,7 @@ const Form: FC = () => {
       )}
 
       <div className="card-list">
-        {users.map((user, index) => {
+        {state.users.map((user, index) => {
           return <UserCard key={index} user={user} />;
         })}
       </div>

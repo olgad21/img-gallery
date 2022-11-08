@@ -1,4 +1,10 @@
-import React, { KeyboardEventHandler, useEffect, useState, FC, useContext } from "react";
+import React, {
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+  FC,
+  useContext,
+} from "react";
 import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
 import { getData } from "../../utils/data.utils";
@@ -21,7 +27,6 @@ const ErrorMessage = () => {
 };
 
 const Home: FC = () => {
-  
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem("search") || ""
   );
@@ -58,13 +63,13 @@ const Home: FC = () => {
 
       dispatch({
         type: "addPhotos",
-        payload: photos
+        payload: photos,
       });
       setIsLoading(false);
     } catch {
       dispatch({
         type: "addPhotos",
-        payload: []
+        payload: [],
       });
       setIsLoading(false);
     }
@@ -79,10 +84,13 @@ const Home: FC = () => {
         defaultValue={searchValue}
       />
       {isLoading && <DownloadMessage />}
-      {state.photos?.length ? <CardList photos={state.photos} /> : <ErrorMessage />}
+      {state.photos?.length ? (
+        <CardList photos={state.photos} />
+      ) : (
+        <ErrorMessage />
+      )}
     </div>
   );
 };
 
 export default Home;
-
