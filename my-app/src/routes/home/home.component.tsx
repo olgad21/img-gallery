@@ -3,12 +3,11 @@ import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
 import { getData } from "../../utils/data.utils";
 import { host, apiKey } from "../../constants";
-import Photo, { FlickrResponse } from "Interfaces";
+import { FlickrResponse } from "Interfaces";
 import DownloadMessage from "components/download-message/download-message.component";
-import { SearchResultContext } from "contexts/search-result.context";
+import { AppContext } from "contexts/context";
 
 export type HomeState = {
-  photos: null | Photo[]; //
   searchValue: string;
   isLoading: boolean;
 };
@@ -26,7 +25,7 @@ const Home: FC = () => {
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem("search") || ""
   );
-  const { searchResult, setSearchResult } = useContext(SearchResultContext);
+  const { state, dispatch } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const Home: FC = () => {
       saveToStorage();
       window.removeEventListener("beforeunload", saveToStorage);
     };
-  }, []);
+  }, [searchValue]);
 
   const saveToStorage = () => {
     localStorage.setItem("search", searchValue);
@@ -57,10 +56,16 @@ const Home: FC = () => {
       );
       const photos = response.photos.photo;
 
-      setSearchResult(photos);
+      dispatch({
+        type: "addPhotos",
+        payload: photos
+      });
       setIsLoading(false);
     } catch {
-      setSearchResult([]);
+      dispatch({
+        type: "addPhotos",
+        payload: []
+      });
       setIsLoading(false);
     }
   };
@@ -74,7 +79,7 @@ const Home: FC = () => {
         defaultValue={searchValue}
       />
       {isLoading && <DownloadMessage />}
-      {searchResult?.length ? <CardList photos={searchResult} /> : <ErrorMessage />}
+      {state.photos?.length ? <CardList photos={state.photos} /> : <ErrorMessage />}
     </div>
   );
 };

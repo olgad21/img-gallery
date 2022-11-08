@@ -4,18 +4,18 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import SearchResultProvider from "contexts/search-result.context";
+import { AppContextProvider } from "contexts/context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/olgad21-REACT2022Q3">
-      <SearchResultProvider>
+    <AppContextProvider>
+      <BrowserRouter basename="/olgad21-REACT2022Q3">
         <App />
-      </SearchResultProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AppContextProvider>
   </React.StrictMode>
 );
 
