@@ -88,4 +88,61 @@ export const host =
 
 export const apiKey = "9e74150fed9ef4748d739ad4f107079c";
 
+export const sortOptions = [
+  {
+    label: "Date posted (New to Old)",
+    value: "date-posted-desc",
+  },
+  {
+    label: "Date posted (Old to New)",
+    value: "date-posted-asc",
+  },
+  {
+    label: "Most Interesting",
+    value: "interestingness-desc",
+  },
+];
+
+export const onPageOptions = [
+  {
+    label: "Results per page",
+    value: 100,
+  },
+  {
+    label: 20,
+    value: 20,
+  },
+  {
+    label: 50,
+    value: 50,
+  },
+  {
+    label: 100,
+    value: 100,
+  },
+  {
+    label: 250,
+    value: 250,
+  },
+];
+
+export const pagesCountOptions = [
+  {
+    label: "Total number of pages",
+    value: 1,
+  },
+  {
+    label: 1,
+    value: 1,
+  },
+  {
+    label: 5,
+    value: 5,
+  },
+  {
+    label: 10,
+    value: 10,
+  },
+];
+
 export default monsters;

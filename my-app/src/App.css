@@ -19,3 +19,7 @@ body {
   font-size: 100px;
   color: #0ccac4;
 }
+
+.selectControllers * {
+  margin-left: 0.5rem;
+}
