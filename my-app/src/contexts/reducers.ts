@@ -8,6 +8,7 @@ import {
   SortTypes,
   UsersActionType,
   PageActionType,
+  SelectedPhotoActionType,
 } from "./context";
 
 export const photosReducer = (
@@ -19,6 +20,7 @@ export const photosReducer = (
     | PerPageActionType
     | PageCountActionType
     | PageActionType
+    | SelectedPhotoActionType
 ) => {
   if (action.type === "addPhotos") {
     let stateCopy = [...state];
@@ -37,6 +39,7 @@ export const usersReducer = (
     | PerPageActionType
     | PageCountActionType
     | PageActionType
+    | SelectedPhotoActionType
 ) => {
   if (action.type === "addUsers") {
     return [...state, action.payload];
@@ -54,6 +57,7 @@ export const sortReducer = (
     | PerPageActionType
     | PageCountActionType
     | PageActionType
+    | SelectedPhotoActionType
 ) => {
   if (action.type === "changeSorting") {
     let stateCopy = state;
@@ -72,6 +76,7 @@ export const perPageReducer = (
     | PerPageActionType
     | PageCountActionType
     | PageActionType
+    | SelectedPhotoActionType
 ) => {
   if (action.type === "changePerPageCount") {
     let stateCopy = state;
@@ -90,6 +95,7 @@ export const pagesCountReducer = (
     | PerPageActionType
     | PageCountActionType
     | PageActionType
+    | SelectedPhotoActionType
 ) => {
   if (action.type === "changePagesCount") {
     let stateCopy = state;
@@ -108,8 +114,28 @@ export const pageReducer = (
     | PerPageActionType
     | PageCountActionType
     | PageActionType
+    | SelectedPhotoActionType
 ) => {
   if (action.type === "changePage") {
+    let stateCopy = state;
+    return (stateCopy = action.payload);
+  } else {
+    return state;
+  }
+};
+
+export const selectedPhotoReducer = (
+  state: Photo | null,
+  action:
+    | PhotosActionType
+    | UsersActionType
+    | SortActionType
+    | PerPageActionType
+    | PageCountActionType
+    | PageActionType
+    | SelectedPhotoActionType
+) => {
+  if (action.type === "selectPhoto") {
     let stateCopy = state;
     return (stateCopy = action.payload);
   } else {

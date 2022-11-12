@@ -5,7 +5,6 @@ import React, {
   FC,
   useContext,
   ChangeEventHandler,
-  MouseEventHandler,
 } from "react";
 import CardList from "../../components/card-list/card-list.component";
 import SearchBar from "../../components/search-bar/search-bar.component";
@@ -107,7 +106,7 @@ const Home: FC = () => {
       payload: page,
     });
     fetchUsers(searchValue, state.sort, state.perPage, page);
-  }
+  };
 
   const fetchUsers = async (
     searchedText: string,
@@ -155,20 +154,23 @@ const Home: FC = () => {
           </select>
           <select onChange={hanglePerPageCount}>
             {onPageOptions.map((option) => (
-              <option value={option.value} key={option.value}>
+              <option value={option.value} key={option.label}>
                 {option.label}
               </option>
             ))}
           </select>
           <select onChange={hanglePagesCount}>
             {pagesCountOptions.map((option) => (
-              <option value={option.value} key={`${option.value}totalPages`}>
+              <option value={option.value} key={`${option.label}`}>
                 {option.label}
               </option>
             ))}
           </select>
         </div>
-        <Pagination pagesCount={state.pagesCount} onPageChange={handlePageNumber}/>
+        <Pagination
+          pagesCount={state.pagesCount}
+          onPageChange={handlePageNumber}
+        />
         {isLoading && <DownloadMessage />}
         {state.photos?.length ? (
           <CardList photos={state.photos} />

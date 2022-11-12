@@ -1,6 +1,5 @@
-import { AppContext } from "contexts/context";
-import React, { ChangeEventHandler, FC, MouseEventHandler, useContext } from "react";
-import './pagination.styles.css';
+import React, { FC } from "react";
+import "./pagination.styles.css";
 
 interface PaginationProps {
   pagesCount: number;
@@ -14,7 +13,11 @@ const Pagination: FC<PaginationProps> = ({ pagesCount, onPageChange }) => {
     <div className="pagination">
       {arrToMap.map((_, i) => {
         return (
-          <button className="paginationButton" onClick={() => onPageChange(i+1)}>
+          <button
+            key={i}
+            className="paginationButton"
+            onClick={() => onPageChange(i + 1)}
+          >
             {i + 1}
           </button>
         );

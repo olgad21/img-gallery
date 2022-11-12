@@ -32,3 +32,8 @@
 .current {
   border-bottom: 2px solid black;
 }
+
+.currentItem {
+  color: rgb(0, 200, 214);
+  font-weight: bold;
+}

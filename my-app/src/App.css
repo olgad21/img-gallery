@@ -23,3 +23,22 @@ body {
 .selectControllers * {
   margin-left: 0.5rem;
 }
+
+.backButton {
+  background-color: rgba(0, 128, 128, 1);
+  color: white;
+  border: none;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.backButton:focus,
+.backButton:hover {
+  background: rgba(0, 128, 128, 0.411);
+  transform: scale(1.1);
+}

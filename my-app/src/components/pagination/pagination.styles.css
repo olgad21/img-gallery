@@ -13,14 +13,13 @@
   text-align: center;
   border-radius: 3px;
   text-decoration: none;
-  transition: background 250ms ease-in-out, 
-              transform 150ms ease;
+  transition: background 250ms ease-in-out, transform 150ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
 .paginationButton:hover,
 .paginationButton:focus {
-    background: rgba(0, 128, 128, 0.411);
-    transform: scale(1.1);
+  background: rgba(0, 128, 128, 0.411);
+  transform: scale(1.1);
 }

@@ -8,6 +8,7 @@ import {
   sortReducer,
   usersReducer,
   pageReducer,
+  selectedPhotoReducer,
 } from "./reducers";
 
 export type SortTypes =
@@ -22,6 +23,7 @@ type InitialStateType = {
   perPage: number;
   pagesCount: number;
   page: number;
+  selectedPhoto: Photo | null;
 };
 
 export type PhotosActionType = {
@@ -54,6 +56,11 @@ export type PageActionType = {
   payload: number;
 };
 
+export type SelectedPhotoActionType = {
+  type: "selectPhoto";
+  payload: Photo | null;
+};
+
 const initialState: InitialStateType = {
   photos: [],
   users: [],
@@ -61,6 +68,7 @@ const initialState: InitialStateType = {
   perPage: 100,
   pagesCount: 1,
   page: 1,
+  selectedPhoto: null,
 };
 
 const AppContext = createContext<{
@@ -72,6 +80,7 @@ const AppContext = createContext<{
     | PerPageActionType
     | PageCountActionType
     | PageActionType
+    | SelectedPhotoActionType
   >;
 }>({
   state: initialState,
@@ -87,6 +96,7 @@ const mainReducer = (
     | PerPageActionType
     | PageCountActionType
     | PageActionType
+    | SelectedPhotoActionType
 ) => ({
   photos: photosReducer(state.photos, action),
   users: usersReducer(state.users, action),
@@ -94,6 +104,7 @@ const mainReducer = (
   perPage: perPageReducer(state.perPage, action),
   pagesCount: pagesCountReducer(state.pagesCount, action),
   page: pageReducer(state.page, action),
+  selectedPhoto: selectedPhotoReducer(state.selectedPhoto, action),
 });
 
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
