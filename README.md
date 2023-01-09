@@ -1,5 +1,5 @@
 # Flickr Image Gallery
-Test task for the course [React RS School](https://github.com/rolling-scopes-school/tasks/tree/master/react)with the use of Flickr API
+Test task for the course [React RS School](https://github.com/rolling-scopes-school/tasks/tree/master/react) with the use of Flickr API
 
 It's a simple web application to search for images written in **React** . 
 It also has a form to submit user information.
