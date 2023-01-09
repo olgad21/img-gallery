@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/olgad21-REACT2022Q3/static/css/main.c0693ba3.css",
+    "main.js": "/olgad21-REACT2022Q3/static/js/main.61bdb1fd.js",
+    "static/js/787.28cb0dcd.chunk.js": "/olgad21-REACT2022Q3/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/olgad21-REACT2022Q3/index.html",
+    "main.c0693ba3.css.map": "/olgad21-REACT2022Q3/static/css/main.c0693ba3.css.map",
+    "main.61bdb1fd.js.map": "/olgad21-REACT2022Q3/static/js/main.61bdb1fd.js.map",
+    "787.28cb0dcd.chunk.js.map": "/olgad21-REACT2022Q3/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c0693ba3.css",
+    "static/js/main.61bdb1fd.js"
+  ]
+}
