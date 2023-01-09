@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AppContextProvider>
-      <BrowserRouter basename="/olgad21-REACT2022Q3">
+      <BrowserRouter basename="/img-gallery">
         <App />
       </BrowserRouter>
     </AppContextProvider>
